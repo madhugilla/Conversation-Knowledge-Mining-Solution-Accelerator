@@ -128,7 +128,7 @@ public class AzureContentUnderstandingClient
 
         await SetAuthenticationHeaderAsync();
 
-        var json = JsonSerializer.Serialize(templateDict);
+        var jsonContent = JsonSerializer.Serialize(templateDict);
         var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
         
         var response = await _httpClient.PutAsync(GetAnalyzerUrl(analyzerId), content);

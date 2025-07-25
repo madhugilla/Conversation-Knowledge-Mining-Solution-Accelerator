@@ -75,10 +75,10 @@ public class CreateSearchIndex
         // Add Azure OpenAI vectorizer
         vectorSearch.Vectorizers.Add(new AzureOpenAIVectorizer("myOpenAI")
         {
-            AzureOpenAIParameters = new AzureOpenAIParameters
+            Parameters = new AzureOpenAIVectorizerParameters
             {
                 ResourceUri = new Uri(openaiResourceUrl),
-                DeploymentId = embeddingModel,
+                DeploymentName = embeddingModel,
                 ModelName = embeddingModel
             }
         });

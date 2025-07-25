@@ -96,16 +96,18 @@ public class CuProcessDataText
         
         try
         {
-            var response = await openAiClient.GetEmbeddingClient(modelId).GenerateEmbeddingsAsync(new[] { text });
-            return response.Value[0].Vector.ToArray();
+            var embeddingClient = openAiClient.GetEmbeddingClient(modelId);
+            var response = await embeddingClient.GenerateEmbeddingAsync(text);
+            return response.Value.ToFloats().ToArray();
         }
         catch
         {
             await Task.Delay(30000); // Wait 30 seconds
             try
             {
-                var response = await openAiClient.GetEmbeddingClient(modelId).GenerateEmbeddingsAsync(new[] { text });
-                return response.Value[0].Vector.ToArray();
+                var embeddingClient = openAiClient.GetEmbeddingClient(modelId);
+                var response = await embeddingClient.GenerateEmbeddingAsync(text);
+                return response.Value.ToFloats().ToArray();
             }
             catch
             {
@@ -199,15 +201,11 @@ public class CuProcessDataText
             Do not return anything else.
             ";
 
-        var messages = new[]
-        {
-            new { role = "system", content = "You are a helpful assistant." },
-            new { role = "user", content = topicPrompt }
-        };
-
         var chatClient = openAiClient.GetChatClient(deployment);
-        var response = await chatClient.CompleteChatAsync(messages.Select(m => 
-            m.role == "system" ? (ChatMessage)new SystemChatMessage(m.content) : new UserChatMessage(m.content)));
+        var response = await chatClient.CompleteChatAsync([
+            new OpenAI.Chat.SystemChatMessage("You are a helpful assistant."),
+            new OpenAI.Chat.UserChatMessage(topicPrompt)
+        ]);
         
         var content = response.Value.Content[0].Text;
         return content.Replace("```json", "").Replace("```", "");
@@ -220,15 +218,11 @@ public class CuProcessDataText
                         from a list of topics - {topicsStr}.
                         ALWAYS only return a topic from list - {topicsStr}. Do not add any other text.";
 
-        var messages = new[]
-        {
-            new { role = "system", content = "You are a helpful assistant." },
-            new { role = "user", content = prompt }
-        };
-
         var chatClient = openAiClient.GetChatClient(deployment);
-        var response = await chatClient.CompleteChatAsync(messages.Select(m => 
-            m.role == "system" ? (ChatMessage)new SystemChatMessage(m.content) : new UserChatMessage(m.content)));
+        var response = await chatClient.CompleteChatAsync([
+            new OpenAI.Chat.SystemChatMessage("You are a helpful assistant."),
+            new OpenAI.Chat.UserChatMessage(prompt)
+        ]);
         
         return response.Value.Content[0].Text;
     }

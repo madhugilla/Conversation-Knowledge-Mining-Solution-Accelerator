@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("IndexScripts")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a93f4e3dc72481aea174392ea00c521b4bfb1a52")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+369a0aa08d4dc26dfac29c992354537683dd7395")]
 [assembly: System.Reflection.AssemblyProductAttribute("IndexScripts")]
 [assembly: System.Reflection.AssemblyTitleAttribute("IndexScripts")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
